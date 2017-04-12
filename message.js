@@ -84,5 +84,8 @@ class Message {
 };
 
 Message.Types = require('./types');
+Message.Parameter = require('./parameter');
+Message.Builder = require('./message-builder');
+Message.Defaults = require('./defaults');
 
 module.exports = Message;
