@@ -83,5 +83,25 @@ module.exports = class Parameter {
 		byteOffset = byteOffset || 0;
 		return Int64.Uint64BE(this.data.slice(byteOffset, byteOffset + 8)).toNumber();
 	}
+
+	readFloatLE (byteOffset) {
+		byteOffset = byteOffset || 0;
+		return this.data.readFloatLE(byteOffset);
+	}
+
+	readFloatBE (byteOffset) {
+		byteOffset = byteOffset || 0;
+		return this.data.readFloatBE(byteOffset);
+	}
+
+	readDoubleLE (byteOffset) {
+		byteOffset = byteOffset || 0;
+		return this.data.readDoubleLE(byteOffset);
+	}
+
+	readDoubleBE (byteOffset) {
+		byteOffset = byteOffset || 0;
+		return this.data.readDoubleBE(byteOffset);
+	}
 };
 

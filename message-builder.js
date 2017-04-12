@@ -149,6 +149,30 @@ class MessageBuilder {
 		const val64 = Int64.Uint64BE(val);
 		this.addParameter(id, val64.toBuffer());
 	}
+
+	addFloatLE(id, val) {
+		const buffer = Buffer.alloc(4);
+		buffer.writeFloatLE(val);
+		this.addParameter(id, buffer);
+	}
+
+	addFloatBE(id, val) {
+		const buffer = Buffer.alloc(4);
+		buffer.writeFloatBE(val);
+		this.addParameter(id, buffer);
+	}
+
+	addDoubleLE(id, val) {
+		const buffer = Buffer.alloc(8);
+		buffer.writeDoubleLE(val);
+		this.addParameter(id, buffer);
+	}
+
+	addDoubleBE(id, val) {
+		const buffer = Buffer.alloc(8);
+		buffer.writeDoubleBE(val);
+		this.addParameter(id, buffer);
+	}
 }
 
 module.exports = MessageBuilder;
