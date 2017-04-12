@@ -20,6 +20,8 @@ class MessageBuilder {
 
 		args = args || {};
 
+		this.id = id;
+
 		this.messageSizeType = args.messageSizeType || Defaults.messageSizeType;
 		this.messageIdType = args.messageIdType || Defaults.messageIdType;
 		this.parameterSizeType = args.parameterSizeType || Defaults.parameterSizeType;
