@@ -1,13 +1,12 @@
 'using strict';
 const Parameter = require('./parameter');
 const Defaults  = require('./defaults');
-const Int64     = require('int64-buffer');
 
 class Message {
 	/**
 	 * All available types are defined in `Message.Types` object
 	 *
-	 * @param {Buffer} buffer
+	 * @param {Buffer} buffer - buffer containing message bytes
 	 * @param {Object} args
 	 * @param {String} args.messageSizeType -
 	 * @param {String} args.messageIdType -
@@ -63,11 +62,38 @@ class Message {
 	}
 
 	/**
+	 * returns first parameter of the message (if `id` is not a number)
+	 * or first prameter with given id or null if parameter with given
+	 * id is not found or message has no
 	 *
-	 * @param {Number} id - (optional)
+	 * @param {number} id - (optional) id of the parameter that should be returned
+	 */
+	getParameter (id) {
+		if (this.parameters.length <= 0) {
+			return null;
+		}
+
+		if (typeof id !== 'number') {
+			return this.parameters[0];
+		}
+
+		for (let param of this.parameters) {
+			if (param.id === id) {
+				return param;
+			}
+		}
+
+		return null;
+	}
+
+	/**
+	 * returns list of all parameters (if `id` is not a number)
+	 * or array of all parameters with given id
+	 *
+	 * @param {Number} id - (optional) id of the parameters that should be returned
 	 */
 	getParameters (id) {
-		if (typeof id === 'undefined') {
+		if (typeof id !== 'number') {
 			return this.parameters;
 		}
 
