@@ -1,5 +1,5 @@
 {
-  "name": "lib_njs_umf",
+  "name": "parametrized-message",
   "version": "0.0.1",
   "description": "",
   "main": "message.js",
