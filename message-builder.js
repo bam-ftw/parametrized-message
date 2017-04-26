@@ -40,14 +40,14 @@ class MessageBuilder {
 
 		const result = Buffer.alloc(fullSize);
 
-		result[this.messageSizeType.writeMethod](fullSize, 0);
-		result[this.messageIdType.writeMethod](this.id, this.messageSizeType.size);
+		this.messageSizeType.write(result, fullSize, 0);
+		this.messageIdType.write(result, this.id, this.messageSizeType.size);
 
 		let currentIdx = this.messageSizeType.size + this.messageIdType.size;
 
 		this.parameters.forEach(param => {
-			result[this.parameterSizeType.writeMethod](param.size, currentIdx);
-			result[this.parameterIdType.writeMethod](param.id, currentIdx + this.parameterSizeType.size);
+			this.parameterSizeType.write(result, param.size, currentIdx);
+			this.parameterIdType.write(result, param.id, currentIdx + this.parameterSizeType.size);
 
 			param.data.copy(result, currentIdx + this.parameterSizeType.size + this.parameterIdType.size);
 

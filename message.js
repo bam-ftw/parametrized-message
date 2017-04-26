@@ -31,8 +31,11 @@ class Message {
 	}
 
 	_parseData () {
-		this.size = this.buffer[this.messageSizeType.readMethod](0);
-		this.id = this.buffer[this.messageIdType.readMethod](this.messageIdType.size);
+		// this.size = this.buffer[this.messageSizeType.readMethod](0);
+		// this.id = this.buffer[this.messageIdType.readMethod](this.messageIdType.size);
+
+		this.size = this.messageSizeType.read(this.buffer, 0);
+		this.id = this.messageIdType.read(this.buffer, this.messageIdType.size);
 
 		if (this.size !== this.buffer.length)
 			throw new Error('buffer size does not match its contents');
@@ -41,16 +44,16 @@ class Message {
 
 		this.parameters = [];
 
-		const readParamSize     = this.buffer[this.parameterSizeType.readMethod].bind(this.buffer);
+		// const readParamSize     = this.buffer[this.parameterSizeType.readMethod].bind(this.buffer);
 		const paramSizeTypeSize = this.parameterSizeType.size;
-		const readParamId       = this.buffer[this.parameterIdType.readMethod].bind(this.buffer);
+		// const readParamId       = this.buffer[this.parameterIdType.readMethod].bind(this.buffer);
 		const paramIdTypeSize   = this.parameterSizeType.size;
 
 		while (currentIndex < this.buffer.length) {
 			const sliceIdx = currentIndex + paramSizeTypeSize + paramIdTypeSize;
 
-			const size = readParamSize(currentIndex);
-			const id = readParamId(currentIndex + paramSizeTypeSize);
+			const size = this.parameterSizeType.read(this.buffer, currentIndex);
+			const id = this.parameterIdType.read(this.buffer, currentIndex + paramSizeTypeSize);
 			const data = this.buffer.slice(sliceIdx, sliceIdx + size);
 
 			const parameter = new Parameter(size, id, data);
